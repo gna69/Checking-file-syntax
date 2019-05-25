@@ -1,0 +1,20 @@
+TARGET=compiler
+CC=cc
+CCFLAGS= -IYaccLex -o
+YACCFLAGS= -d -v -o YaccLex/y.tab.c
+LEXFLAGS= -o YaccLex/lex.yy.c
+CFILES = YaccLex/lex.yy.c YaccLex/y.tab.c
+
+all: 
+	clear
+	mkdir -p YaccLex
+	yacc $(YACCFLAGS) parser.yacc
+	lex $(LEXFLAGS) lexer.lex 
+	$(CC) $(CFILES) $(CCFLAGS) compiler
+
+clear:
+		rm -rf YaccLex
+
+rebuild: clear all
+
+.PHONY: all clear rebuild
